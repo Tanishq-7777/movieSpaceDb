@@ -1,0 +1,16 @@
+{
+  "name": "moviespace-backend",
+  "version": "1.0.0",
+  "description": "a movie data base",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Tanishq Saxena",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^5.1.0",
+    "mongoose": "^8.19.3",
+    "validator": "^13.15.20"
+  }
+}
