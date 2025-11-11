@@ -1,18 +1,11 @@
 const express = require("express");
 const { connectDb } = require("./config/database");
+const authRouter = require("./routers/authRouter");
 const User = require("./models/user");
 const app = express();
-const PORT = 9999;
-
-app.use("/", async (req, res) => {
-  const user = new User({
-    name: "tanishq",
-    email: "saxenaat@gmail.com",
-    password: "12345678",
-  });
-  await user.save();
-  res.send("Checking Db");
-});
+const PORT = 7777;
+app.use(express.json());
+app.use("/", authRouter);
 
 connectDb()
   .then(() => {
