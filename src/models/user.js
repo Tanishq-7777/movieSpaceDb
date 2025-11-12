@@ -23,7 +23,7 @@ const userSchema = new mongoose.Schema({
     trim: true,
   },
 });
-userSchema.methods.getJwt = async () => {
+userSchema.methods.getJwt = async function () {
   const user = this;
   const token = await jwt.sign({ _id: user._id }, "MovieSpace2025");
   return token;

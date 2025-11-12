@@ -3,6 +3,7 @@ const authRouter = express.Router();
 const bcrypt = require("bcrypt");
 const User = require("../models/user");
 const { validateSignUpData } = require("../utils/validations");
+const userAuth = require("../middlewares/userAuth");
 //signup Api
 authRouter.post("/user/signup", async (req, res) => {
   try {
@@ -16,8 +17,8 @@ authRouter.post("/user/signup", async (req, res) => {
       password: passwordHash,
     });
     //validating name email and password
-    validateSignUpData(req.body);
-    user.save();
+    await validateSignUpData(req.body);
+    await user.save();
     const token = await user.getJwt();
     res.cookie("token", token);
     res.status(200).send("Data Saved Successfully");
@@ -27,6 +28,23 @@ authRouter.post("/user/signup", async (req, res) => {
     });
   }
 });
-authRouter.post("/user/login", userAuth, async (req, res) => {});
+authRouter.post("/user/login", async (req, res) => {
+  try {
+    const { email, password } = req.body;
+    const user = await User.findOne({ email: email });
+    if (!user) throw new Error("Invalid Credential");
+    const hashedPassword = user.password;
+    const isPasswordValid = await bcrypt.compare(password, hashedPassword);
+    if (isPasswordValid) {
+      const token = await user.getJwt();
+      res.cookie("token", token);
+      res.send(user);
+    } else {
+      throw new Error("Invalid Credential");
+    }
+  } catch (err) {
+    res.status(400).send(err.message);
+  }
+});
 
 module.exports = authRouter;
