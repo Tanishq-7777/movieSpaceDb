@@ -9,7 +9,7 @@ async function userAuth(req, res, next) {
       if (!validToken) throw new Error("Token is not valid");
       const { _id } = validToken;
       const user = await User.findOne({ _id });
-      if (!user) throw new Error("Token is not valid");
+      if (!user) throw new Error("User is not valid");
       req.user = user;
       next();
     }

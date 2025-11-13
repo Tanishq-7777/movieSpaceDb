@@ -4,6 +4,7 @@ const bcrypt = require("bcrypt");
 const User = require("../models/user");
 const { validateSignUpData } = require("../utils/validations");
 const userAuth = require("../middlewares/userAuth");
+const jwt = require("jsonwebtoken");
 //signup Api
 authRouter.post("/user/signup", async (req, res) => {
   try {
@@ -46,5 +47,10 @@ authRouter.post("/user/login", async (req, res) => {
     res.status(400).send(err.message);
   }
 });
-
+authRouter.post("/user/logout", userAuth, async (req, res) => {
+  res.cookie("token", null, {
+    expires: new Date(Date.now()),
+  });
+  res.send("Logout Successful");
+});
 module.exports = authRouter;
