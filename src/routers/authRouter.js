@@ -8,20 +8,25 @@ const jwt = require("jsonwebtoken");
 //signup Api
 authRouter.post("/user/signup", async (req, res) => {
   try {
-    let { name, email, password } = req.body;
+    let { name, email, password, photoUrl } = req.body;
     //encrypt the Password
     const passwordHash = await bcrypt.hash(password, 10);
     password = passwordHash;
     const user = new User({
       name,
+      photoUrl,
       email,
       password: passwordHash,
     });
     //validating name email and password
     await validateSignUpData(req.body);
     await user.save();
-    const token = await user.getJwt();
-    res.cookie("token", token);
+    const token = await user.getJWT();
+    res.cookie("token", token, {
+      httpOnly: true,
+      secure: true,
+      sameSite: "none",
+    });
     res.status(200).send("Data Saved Successfully");
   } catch (err) {
     res.status(400).json({
@@ -38,7 +43,11 @@ authRouter.post("/user/login", async (req, res) => {
     const isPasswordValid = await bcrypt.compare(password, hashedPassword);
     if (isPasswordValid) {
       const token = await user.getJwt();
-      res.cookie("token", token);
+      res.cookie("token", token, {
+        httpOnly: true,
+        secure: true,
+        sameSite: "none",
+      });
       res.send(user);
     } else {
       throw new Error("Invalid Credential");
@@ -48,8 +57,11 @@ authRouter.post("/user/login", async (req, res) => {
   }
 });
 authRouter.post("/user/logout", userAuth, async (req, res) => {
-  res.cookie("token", null, {
-    expires: new Date(Date.now()),
+  res.cookie("token", "", {
+    httpOnly: true,
+    secure: true,
+    sameSite: "none",
+    expires: new Date(0),
   });
   res.send("Logout Successful");
 });

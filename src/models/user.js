@@ -7,6 +7,10 @@ const userSchema = new mongoose.Schema({
     required: true,
     trim: true,
   },
+  photoUrl: {
+    type: String,
+    default: "https://www.greengold.tv/assets/Character/CB/Bheem.jpg",
+  },
   email: {
     type: String,
     required: true,
