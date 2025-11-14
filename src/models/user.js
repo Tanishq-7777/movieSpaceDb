@@ -27,11 +27,12 @@ const userSchema = new mongoose.Schema({
     trim: true,
   },
 });
-userSchema.methods.getJwt = async function () {
+userSchema.methods.getJWT = async function () {
   const user = this;
-  const token = await jwt.sign({ _id: user._id }, "MovieSpace2025", {
+  const token = jwt.sign({ _id: user._id }, "MovieSpace2025", {
     expiresIn: "1d",
   });
   return token;
 };
+
 module.exports = mongoose.model("User", userSchema);
