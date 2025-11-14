@@ -39,23 +39,25 @@ authRouter.post("/user/login", async (req, res) => {
     const { email, password } = req.body;
     const user = await User.findOne({ email: email });
     if (!user) throw new Error("Invalid Credential");
-    const hashedPassword = user.password;
-    const isPasswordValid = await bcrypt.compare(password, hashedPassword);
-    if (isPasswordValid) {
-      const token = await user.getJwt();
-      res.cookie("token", token, {
-        httpOnly: true,
-        secure: true,
-        sameSite: "none",
-      });
-      res.send(user);
-    } else {
-      throw new Error("Invalid Credential");
-    }
+
+    const isPasswordValid = await bcrypt.compare(password, user.password);
+    if (!isPasswordValid) throw new Error("Invalid Credential");
+
+    // FIXED HERE
+    const token = await user.getJWT();
+
+    res.cookie("token", token, {
+      httpOnly: true,
+      secure: true,
+      sameSite: "none",
+    });
+
+    res.send(user);
   } catch (err) {
     res.status(400).send(err.message);
   }
 });
+
 authRouter.post("/user/logout", userAuth, async (req, res) => {
   res.cookie("token", "", {
     httpOnly: true,
