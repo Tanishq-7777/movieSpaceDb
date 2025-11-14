@@ -11,8 +11,7 @@ app.use(
   cors({
     origin: [
       "http://localhost:5173",
-      "https://devtinder-iwop.onrender.com", // backend
-      "https://your-frontend.onrender.com", // frontend → replace this one
+      "https://mini-project-movies-space.vercel.app", // your real frontend
     ],
     credentials: true,
   })
