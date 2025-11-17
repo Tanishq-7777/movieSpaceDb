@@ -11,7 +11,6 @@ async function userAuth(req, res, next) {
       const user = await User.findOne({ _id });
       if (!user) throw new Error("User is not valid");
       req.user = user;
-      next();
     }
     next();
   } catch (err) {
