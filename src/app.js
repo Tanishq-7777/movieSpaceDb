@@ -28,7 +28,7 @@ app.use("/", userWatchList);
 
 connectDb()
   .then(() => {
-    console.log("DB Connected 👌");
+    console.log("DB Connected👌");
     app.listen(PORT, () => {
       console.log(`SERVER IS LISTENING ON PORT ${PORT}`);
     });
