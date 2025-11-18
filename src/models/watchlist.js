@@ -3,11 +3,9 @@ const watchListScheema = new mongoose.Schema({
   userId: {
     type: mongoose.Schema.Types.ObjectId,
     required: true,
-    index: true,
   },
   movieId: {
     type: Number,
-    index: true,
   },
   title: {
     type: String,
@@ -34,4 +32,5 @@ const watchListScheema = new mongoose.Schema({
     type: String,
   },
 });
+watchListScheema.index({ userId: 1, movieId: 1 }, { unique: true });
 module.exports = mongoose.model("WatchList", watchListScheema);

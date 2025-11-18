@@ -13,7 +13,7 @@ app.use(
   cors({
     origin: [
       "http://localhost:5173",
-      "https://mini-project-movies-space.vercel.app", // your real frontend
+      "https://mini-project-movies-space.vercel.app", 
     ],
     credentials: true,
   })
