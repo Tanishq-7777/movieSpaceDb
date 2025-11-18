@@ -6,6 +6,7 @@ const cookieParser = require("cookie-parser");
 const User = require("./models/user");
 const userProfile = require("./routers/userProfile");
 const userHistory = require("./routers/userHistory");
+const userWatchList = require("./routers/userWatchList");
 const app = express();
 const PORT = 7777;
 app.use(
@@ -23,6 +24,7 @@ app.use(cookieParser());
 app.use("/", authRouter);
 app.use("/", userProfile);
 app.use("/", userHistory);
+app.use("/", userWatchList);
 
 connectDb()
   .then(() => {

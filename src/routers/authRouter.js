@@ -43,7 +43,6 @@ authRouter.post("/user/login", async (req, res) => {
     const isPasswordValid = await bcrypt.compare(password, user.password);
     if (!isPasswordValid) throw new Error("Invalid Credential");
 
-    // FIXED HERE
     const token = await user.getJWT();
 
     res.cookie("token", token, {
