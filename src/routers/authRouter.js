@@ -34,6 +34,11 @@ authRouter.post("/user/signup", async (req, res) => {
     });
   }
 });
+// routes/health.js
+authRouter.get("/health", (req, res) => {
+  res.status(200).json({ status: "ok" });
+});
+
 authRouter.post("/user/login", async (req, res) => {
   try {
     const { email, password } = req.body;
