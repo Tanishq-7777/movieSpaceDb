@@ -3,8 +3,8 @@ const initializeSocket = (server) => {
   const io = socket(server, {
     cors: {
       origin: [
-        "https://mini-project-movies-space.vercel.app", // your frontend (production)
-        "http://localhost:5173", // your frontend (development)
+        "https://mini-project-movies-space.vercel.app",
+        "http://localhost:5173",
       ],
       methods: ["GET", "POST"],
       credentials: true,

@@ -1,10 +1,7 @@
 const mongoose = require("mongoose");
 
 const connectDb = async () => {
-  await mongoose.connect(
-    "mongodb+srv://TanishqSaxena:tani2007@moviespace.mj2nkz4.mongodb.net/MoviesSpace"
-  );
+  return mongoose.connect(process.env.MONGODB_URI);
 };
-module.exports = {
-  connectDb,
-};
+
+module.exports = { connectDb };
