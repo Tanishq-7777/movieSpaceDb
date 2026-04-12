@@ -1,16 +1,16 @@
 require("dotenv").config();
 const express = require("express");
-const { connectDb } = require("./config/database");
+const { connectDb } = require("./src/config/database");
 const cors = require("cors");
-const authRouter = require("./routers/authRouter");
+const authRouter = require("./src/routers/authRouter");
 const cookieParser = require("cookie-parser");
-const User = require("./models/user");
-const userProfile = require("./routers/userProfile");
-const userHistory = require("./routers/userHistory");
-const userWatchList = require("./routers/userWatchList");
+const User = require("./src/models/user");
+const userProfile = require("./src/routers/userProfile");
+const userHistory = require("./src/routers/userHistory");
+const userWatchList = require("./src/routers/userWatchList");
 const app = express();
 const http = require("http");
-const initializeSocket = require("./utils/socket");
+const initializeSocket = require("./src/utils/socket");
 const server = http.createServer(app);
 const PORT = process.env.PORT || 7777;
 app.use(
@@ -18,9 +18,10 @@ app.use(
     origin: [
       "http://localhost:5173",
       "https://mini-project-movies-space.vercel.app",
+      "https://muvies.tanishqsaxena.xyz",
     ],
     credentials: true,
-  })
+  }),
 );
 
 app.use(express.json());
