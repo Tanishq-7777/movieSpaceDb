@@ -26,6 +26,9 @@ app.use(
 
 app.use(express.json());
 app.use(cookieParser());
+app.get("/corn", (req, res) => {
+  res.status(200).send("okkkkk");
+});
 app.use("/", authRouter);
 app.use("/", userProfile);
 app.use("/", userHistory);
